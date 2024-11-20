@@ -21,7 +21,7 @@ export const globalStyles = StyleSheet.create({
     fontWeight: '400',
   },
 
-  softResult: {
+  subResult: {
     color: Colors.textSecondary,
     fontSize: 40,
     textAlign: 'right',
