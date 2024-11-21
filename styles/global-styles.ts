@@ -4,22 +4,22 @@ import { Colors } from '@/constants/Colors';
 
 export const globalStyles = StyleSheet.create({
   background: {
-    flex: 1,
     backgroundColor: Colors.background,
+    flex: 1,
     position: 'relative',
   },
 
   calculartorContainer: {
-    flex: 1,
+    flex: 4,
     justifyContent: 'flex-end',
-    paddingBottom: 20,
+    // paddingBottom: 20,
   },
 
   mainResult: {
     color: Colors.textPrimary,
     fontSize: 70,
-    textAlign: 'right',
     fontWeight: '400',
+    textAlign: 'right',
   },
 
   subResult: {
@@ -30,7 +30,6 @@ export const globalStyles = StyleSheet.create({
   },
 
   row: {
-    maxWidth: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 18,
@@ -38,20 +37,18 @@ export const globalStyles = StyleSheet.create({
   },
 
   button: {
-    height: 72,
-    width: 72,
+    alignItems: 'center',
     backgroundColor: Colors.darkGray,
     borderRadius: 100,
     justifyContent: 'center',
-    alignItems: 'center',
     marginHorizontal: 8,
   },
 
   buttonText: {
-    padding: 10,
-    fontSize: 26,
     color: Colors.textPrimary,
-    fontWeight: '300',
     fontFamily: 'SpaceMono',
+    fontSize: 26,
+    fontWeight: '300',
+    padding: 10,
   },
 });

@@ -22,8 +22,10 @@ const CalculatorButton = ({
       style={({ pressed }) => ({
         ...globalStyles.button,
         backgroundColor,
+        aspectRatio: doubleSize ? undefined : '1/1',
+        flex: doubleSize ? 2 : 1,
         opacity: pressed ? 0.8 : 1,
-        width: doubleSize ? 160 : 72,
+        maxWidth: doubleSize ? undefined : '21%',
       })}
       onPress={onPress}
     >
