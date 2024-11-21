@@ -18,7 +18,6 @@ export default function RootLayout() {
   return (
     <View style={globalStyles.background}>
       <Slot />
-
       <StatusBar style='light' />
     </View>
   );
