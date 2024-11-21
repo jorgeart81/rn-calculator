@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 
 import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
@@ -16,9 +16,9 @@ export default function RootLayout() {
   }
 
   return (
-    <View style={globalStyles.background}>
+    <SafeAreaView style={globalStyles.background}>
       <Slot />
       <StatusBar style='light' />
-    </View>
+    </SafeAreaView>
   );
 }
