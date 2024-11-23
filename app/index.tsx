@@ -7,14 +7,21 @@ import { useCalculator } from '@/hooks';
 import { globalStyles } from '@/styles/global-styles';
 
 export default function CalculatorApp() {
-  const { formula, buildNumber, clean, deleteDigit, toogleSign } =
-    useCalculator();
+  const {
+    formula,
+    prevNumber,
+    buildNumber,
+    clean,
+    deleteDigit,
+    toogleSign,
+    divideOperation,
+  } = useCalculator();
 
   return (
     <SafeAreaView style={globalStyles.calculartorContainer}>
       <View style={{ paddingHorizontal: 30, marginBottom: 20 }}>
         <ThemeText variant='h1'>{formula}</ThemeText>
-        <ThemeText variant='h2'>2500</ThemeText>
+        <ThemeText variant='h2'>{prevNumber}</ThemeText>
       </View>
 
       <View style={globalStyles.row}>
@@ -39,7 +46,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='÷'
           backgroundColor={Colors.orange}
-          onPress={() => console.log('÷')}
+          onPress={divideOperation}
         />
       </View>
 
