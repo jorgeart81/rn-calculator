@@ -14,6 +14,9 @@ export default function CalculatorApp() {
     clean,
     deleteDigit,
     toogleSign,
+    addOperation,
+    substractOperation,
+    multiplyOperation,
     divideOperation,
   } = useCalculator();
 
@@ -21,7 +24,9 @@ export default function CalculatorApp() {
     <SafeAreaView style={globalStyles.calculartorContainer}>
       <View style={{ paddingHorizontal: 30, marginBottom: 20 }}>
         <ThemeText variant='h1'>{formula}</ThemeText>
-        <ThemeText variant='h2'>{prevNumber}</ThemeText>
+        <ThemeText variant='h2'>
+          {prevNumber == formula ? '' : prevNumber}
+        </ThemeText>
       </View>
 
       <View style={globalStyles.row}>
@@ -57,7 +62,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='x'
           backgroundColor={Colors.orange}
-          onPress={() => console.log('x')}
+          onPress={multiplyOperation}
         />
       </View>
 
@@ -68,7 +73,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='-'
           backgroundColor={Colors.orange}
-          onPress={() => console.log('-')}
+          onPress={substractOperation}
         />
       </View>
 
@@ -79,7 +84,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='+'
           backgroundColor={Colors.orange}
-          onPress={() => console.log('+')}
+          onPress={addOperation}
         />
       </View>
 

@@ -16,8 +16,20 @@ export const useCalculator = () => {
   const lastOperator = useRef<Operator>();
 
   useEffect(() => {
-    setFormula(number);
+    if (lastOperator.current) {
+      const firstFormulaPart = formula.split(' ').at(0);
+      setFormula(
+        `${firstFormulaPart} ${lastOperator.current} ${number}`
+      );
+    } else {
+      setFormula(number);
+    }
   }, [number]);
+
+  useEffect(() => {
+    const subResult = calculateSubResult();
+    setPrevNumber(subResult.toString());
+  }, [formula]);
 
   const buildNumber = (numberString: string) => {
     if (number.includes('.') && numberString == '.') return;
@@ -89,9 +101,50 @@ export const useCalculator = () => {
     setNumber('0');
   };
 
+  const addOperation = () => {
+    setLastNumber();
+    lastOperator.current = Operator.add;
+  };
+
+  const substractOperation = () => {
+    setLastNumber();
+    lastOperator.current = Operator.substract;
+  };
+
+  const multiplyOperation = () => {
+    setLastNumber();
+    lastOperator.current = Operator.multiply;
+  };
+
   const divideOperation = () => {
     setLastNumber();
     lastOperator.current = Operator.divide;
+  };
+
+  const calculateSubResult = () => {
+    const [firstValue, operation, secondValue] = formula.split(' ');
+
+    const num1 = Number(firstValue);
+    const num2 = Number(secondValue);
+
+    if (isNaN(num2)) return num1;
+
+    switch (operation) {
+      case Operator.add:
+        return num1 + num2;
+
+      case Operator.substract:
+        return num1 - num2;
+
+      case Operator.multiply:
+        return num1 * num2;
+
+      case Operator.divide:
+        return num1 / num2;
+
+      default:
+        throw new Error(`Operation ${operation} not implemented`);
+    }
   };
 
   return {
@@ -106,6 +159,9 @@ export const useCalculator = () => {
     deleteDigit,
     toogleSign,
 
+    addOperation,
+    substractOperation,
+    multiplyOperation,
     divideOperation,
   };
 };
