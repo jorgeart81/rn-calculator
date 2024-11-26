@@ -18,6 +18,7 @@ export default function CalculatorApp() {
     substractOperation,
     multiplyOperation,
     divideOperation,
+    calculateResult,
   } = useCalculator();
 
   return (
@@ -98,7 +99,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='='
           backgroundColor={Colors.orange}
-          onPress={() => console.log('=')}
+          onPress={calculateResult}
         />
       </View>
     </SafeAreaView>

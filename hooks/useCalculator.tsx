@@ -18,9 +18,7 @@ export const useCalculator = () => {
   useEffect(() => {
     if (lastOperator.current) {
       const firstFormulaPart = formula.split(' ').at(0);
-      setFormula(
-        `${firstFormulaPart} ${lastOperator.current} ${number}`
-      );
+      setFormula(`${firstFormulaPart} ${lastOperator.current} ${number}`);
     } else {
       setFormula(number);
     }
@@ -79,6 +77,7 @@ export const useCalculator = () => {
 
   const setLastNumber = () => {
     const pointIndex = number.indexOf('.');
+    calculateResult();
 
     // if it's a integer
     if (pointIndex === -1) {
@@ -119,6 +118,14 @@ export const useCalculator = () => {
   const divideOperation = () => {
     setLastNumber();
     lastOperator.current = Operator.divide;
+  };
+
+  const calculateResult = () => {
+    const subResult = calculateSubResult();
+
+    setFormula(subResult.toString());
+    setPrevNumber(undefined);
+    lastOperator.current = undefined;
   };
 
   const calculateSubResult = () => {
@@ -163,5 +170,6 @@ export const useCalculator = () => {
     substractOperation,
     multiplyOperation,
     divideOperation,
+    calculateResult,
   };
 };
