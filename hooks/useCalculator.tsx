@@ -30,18 +30,31 @@ export const useCalculator = () => {
   }, [formula]);
 
   const buildNumber = (numberString: string) => {
+    // Only allow one decimal point
     if (number.includes('.') && numberString == '.') return;
 
-    if (number.startsWith('0') || number.startsWith('-0')) {
-      if (numberString === '.' || number.includes('.')) {
-        return setNumber(number + numberString);
+    const { sign, temporalNumber } = signAndNumber(number);
+    
+    if (temporalNumber.startsWith('0')) {
+      if (numberString === '.' || temporalNumber.includes('.')) {
+        return setNumber(sign + temporalNumber + numberString);
       }
 
       if (numberString == '0' && !number.includes('.')) return;
-      if (numberString != '0') return setNumber(numberString);
+      return setNumber(sign + numberString);
     }
 
-    setNumber(number + numberString);
+    setNumber(sign + temporalNumber + numberString);
+  };
+
+  const signAndNumber = (value: string) => {
+    const isNegative = value.startsWith('-');
+
+    return {
+      sign: isNegative ? Operator.substract : '',
+      temporalNumber:
+        value.length > 1 && isNegative ? value.substring(1) : value,
+    };
   };
 
   const clean = () => {
@@ -61,23 +74,16 @@ export const useCalculator = () => {
   };
 
   const deleteDigit = () => {
-    let currentSign = '';
-    let temporalNumber = number;
-
-    if (temporalNumber.startsWith('-')) {
-      currentSign = '-';
-      temporalNumber = number.substring(1);
-    }
+    const { sign, temporalNumber } = signAndNumber(number);
 
     if (temporalNumber.length > 1)
-      return setNumber(currentSign + temporalNumber.slice(0, -1));
+      return setNumber(sign + temporalNumber.slice(0, -1));
 
     setNumber('0');
   };
 
   const setLastNumber = () => {
     const pointIndex = number.indexOf('.');
-    calculateResult();
 
     // if it's a integer
     if (pointIndex === -1) {
