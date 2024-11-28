@@ -26,7 +26,8 @@ export const useCalculator = () => {
 
   useEffect(() => {
     const subResult = calculateSubResult();
-    setPrevNumber(subResult.toString());
+
+    if (lastOperator.current) setPrevNumber(subResult.toString());
   }, [formula]);
 
   const buildNumber = (numberString: string) => {
@@ -34,7 +35,7 @@ export const useCalculator = () => {
     if (number.includes('.') && numberString == '.') return;
 
     const { sign, temporalNumber } = signAndNumber(number);
-    
+
     if (temporalNumber.startsWith('0')) {
       if (numberString === '.' || temporalNumber.includes('.')) {
         return setNumber(sign + temporalNumber + numberString);
@@ -116,7 +117,6 @@ export const useCalculator = () => {
 
   const calculateSubResult = () => {
     const [firstValue, operation, secondValue] = formula.split(' ');
-
     const num1 = Number(firstValue);
     const num2 = Number(secondValue);
 
@@ -142,6 +142,7 @@ export const useCalculator = () => {
 
   const calculateOperation = (operator: keyof typeof Operator) => {
     setLastNumber();
+    if (lastOperator.current) calculateResult();
     lastOperator.current = Operator[operator];
   };
 
