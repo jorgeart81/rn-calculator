@@ -133,7 +133,8 @@ export const useCalculator = () => {
         return num1 * num2;
 
       case Operator.divide:
-        return num1 / num2;
+        const result = num1 / num2;
+        return isNaN(result) ? 'Indeterminate' : result;
 
       default:
         throw new Error(`Operation ${operation} not implemented`);
