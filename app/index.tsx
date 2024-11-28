@@ -14,10 +14,7 @@ export default function CalculatorApp() {
     clean,
     deleteDigit,
     toogleSign,
-    addOperation,
-    substractOperation,
-    multiplyOperation,
-    divideOperation,
+    calculateOperation,
     calculateResult,
   } = useCalculator();
 
@@ -52,7 +49,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='÷'
           backgroundColor={Colors.orange}
-          onPress={divideOperation}
+          onPress={() => calculateOperation('divide')}
         />
       </View>
 
@@ -63,7 +60,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='x'
           backgroundColor={Colors.orange}
-          onPress={multiplyOperation}
+          onPress={() => calculateOperation('multiply')}
         />
       </View>
 
@@ -74,7 +71,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='-'
           backgroundColor={Colors.orange}
-          onPress={substractOperation}
+          onPress={() => calculateOperation('substract')}
         />
       </View>
 
@@ -85,7 +82,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='+'
           backgroundColor={Colors.orange}
-          onPress={addOperation}
+          onPress={() => calculateOperation('add')}
         />
       </View>
 

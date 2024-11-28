@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-enum Operator {
+export enum Operator {
   add = '+',
   substract = '-',
   multiply = 'x',
@@ -100,26 +100,6 @@ export const useCalculator = () => {
     setNumber('0');
   };
 
-  const addOperation = () => {
-    setLastNumber();
-    lastOperator.current = Operator.add;
-  };
-
-  const substractOperation = () => {
-    setLastNumber();
-    lastOperator.current = Operator.substract;
-  };
-
-  const multiplyOperation = () => {
-    setLastNumber();
-    lastOperator.current = Operator.multiply;
-  };
-
-  const divideOperation = () => {
-    setLastNumber();
-    lastOperator.current = Operator.divide;
-  };
-
   const calculateResult = () => {
     const subResult = calculateSubResult();
 
@@ -154,6 +134,11 @@ export const useCalculator = () => {
     }
   };
 
+  const calculateOperation = (operator: keyof typeof Operator) => {
+    setLastNumber();
+    lastOperator.current = Operator[operator];
+  };
+
   return {
     // Props
     formula,
@@ -166,10 +151,7 @@ export const useCalculator = () => {
     deleteDigit,
     toogleSign,
 
-    addOperation,
-    substractOperation,
-    multiplyOperation,
-    divideOperation,
+    calculateOperation,
     calculateResult,
   };
 };
