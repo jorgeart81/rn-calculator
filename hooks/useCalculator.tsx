@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { BuildNumber } from '@/utils';
+
 export enum Operator {
   add = '+',
   substract = '-',
@@ -31,21 +33,11 @@ export const useCalculator = () => {
   }, [formula]);
 
   const buildNumber = (numberString: string) => {
-    // Only allow one decimal point
-    if (number.includes('.') && numberString == '.') return;
+    numberString == '.'
+      ? BuildNumber.makeDecimal()
+      : BuildNumber.addDigit(numberString);
 
-    const { sign, temporalNumber } = signAndNumber(number);
-
-    if (temporalNumber.startsWith('0')) {
-      if (numberString === '.' || temporalNumber.includes('.')) {
-        return setNumber(sign + temporalNumber + numberString);
-      }
-
-      if (numberString == '0' && !number.includes('.')) return;
-      return setNumber(sign + numberString);
-    }
-
-    setNumber(sign + temporalNumber + numberString);
+    if (BuildNumber.numberBuilt) setNumber(BuildNumber.numberBuilt);
   };
 
   const signAndNumber = (value: string) => {
@@ -64,6 +56,8 @@ export const useCalculator = () => {
     setFormula('0');
 
     lastOperator.current = undefined;
+
+    BuildNumber.reset();
   };
 
   const toogleSign = () => {
