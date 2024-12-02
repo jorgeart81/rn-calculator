@@ -18,7 +18,6 @@ export const useCalculator = () => {
   const lastOperator = useRef<Operator>();
 
   useEffect(() => {
-    console.log(lastOperator.current)
     if (lastOperator.current) {
       const firstFormulaPart = formula.split(' ').at(0);
       setFormula(`${firstFormulaPart} ${lastOperator.current} ${number}`);
@@ -29,7 +28,7 @@ export const useCalculator = () => {
 
   useEffect(() => {
     const subResult = calculateSubResult();
-
+    console.log(BuildNumber.isDecimal);
     if (lastOperator.current) setPrevNumber(subResult.toString());
   }, [formula]);
 
@@ -79,27 +78,23 @@ export const useCalculator = () => {
   };
 
   const setLastNumber = () => {
+    const sanitizedNumber = sanitizeNumber(number);
+
+    setPrevNumber(sanitizedNumber);
+    setNumber('0');
+
+    return sanitizedNumber;
+  };
+
+  const sanitizeNumber = (number: string, isDecimal: boolean = false) => {
     const pointIndex = number.indexOf('.');
 
-    // if it's a integer
-    if (pointIndex === -1) {
-      setPrevNumber(number);
-    } else if (number.endsWith('.')) {
-      setPrevNumber(number.slice(0, -1));
-    } else {
-      const decimal = number.slice(pointIndex + 1);
-
-      if (
-        decimal.length === 0 ||
-        decimal.split('').some((char) => char !== '0')
-      ) {
-        setPrevNumber(number);
-      } else {
-        setPrevNumber(number.slice(0, pointIndex));
-      }
+    if (!isDecimal && pointIndex !== -1) {
+      if (number.endsWith('.')) return number.slice(0, -1);
+      else return number.slice(0, pointIndex);
     }
 
-    setNumber('0');
+    return number;
   };
 
   const calculateResult = () => {
@@ -137,9 +132,11 @@ export const useCalculator = () => {
   };
 
   const calculateOperation = (operator: keyof typeof Operator) => {
-    setLastNumber();
+    const sanitizedNumber = setLastNumber();
     if (lastOperator.current) calculateResult();
     lastOperator.current = Operator[operator];
+
+    BuildNumber.setNumberBuilt('0');
   };
 
   return {
