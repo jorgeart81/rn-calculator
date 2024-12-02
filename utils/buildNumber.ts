@@ -1,3 +1,5 @@
+import { regex } from './regex';
+
 export class BuildNumber {
   private static number?: string;
   private static isDecimal = false;
@@ -17,7 +19,8 @@ export class BuildNumber {
       throw new Error('The entry must be a single digit.');
 
     // Ensure the digit is numeric
-    if (!/\d/.test(digit)) throw new Error('Invalid digit: must be a number.');
+    if (!regex.isNumeric.test(digit))
+      throw new Error('Invalid digit: must be a number.');
 
     if (!this.number) {
       this.number = digit;

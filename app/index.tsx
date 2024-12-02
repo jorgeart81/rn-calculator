@@ -49,7 +49,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='÷'
           backgroundColor={Colors.orange}
-          onPress={() => calculateOperation('divide')}
+          onPress={() => calculateOperation('Divide')}
         />
       </View>
 
@@ -60,7 +60,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='x'
           backgroundColor={Colors.orange}
-          onPress={() => calculateOperation('multiply')}
+          onPress={() => calculateOperation('Multiply')}
         />
       </View>
 
@@ -71,7 +71,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='-'
           backgroundColor={Colors.orange}
-          onPress={() => calculateOperation('substract')}
+          onPress={() => calculateOperation('Substract')}
         />
       </View>
 
@@ -82,7 +82,7 @@ export default function CalculatorApp() {
         <CalculatorButton
           label='+'
           backgroundColor={Colors.orange}
-          onPress={() => calculateOperation('add')}
+          onPress={() => calculateOperation('Add')}
         />
       </View>
 

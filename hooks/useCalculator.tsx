@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import { BuildNumber } from '@/utils';
 
 export enum Operator {
-  add = '+',
-  substract = '-',
-  multiply = 'x',
-  divide = '÷',
+  Add = '+',
+  Substract = '-',
+  Multiply = 'x',
+  Divide = '÷',
 }
 
 export const useCalculator = () => {
@@ -18,6 +18,7 @@ export const useCalculator = () => {
   const lastOperator = useRef<Operator>();
 
   useEffect(() => {
+    console.log(lastOperator.current)
     if (lastOperator.current) {
       const firstFormulaPart = formula.split(' ').at(0);
       setFormula(`${firstFormulaPart} ${lastOperator.current} ${number}`);
@@ -44,7 +45,7 @@ export const useCalculator = () => {
     const isNegative = value.startsWith('-');
 
     return {
-      sign: isNegative ? Operator.substract : '',
+      sign: isNegative ? Operator.Substract : '',
       temporalNumber:
         value.length > 1 && isNegative ? value.substring(1) : value,
     };
@@ -65,7 +66,7 @@ export const useCalculator = () => {
       return setNumber(number.replace('-', ''));
     }
 
-    setNumber(Operator.substract + number);
+    setNumber(Operator.Substract + number);
   };
 
   const deleteDigit = () => {
@@ -117,16 +118,16 @@ export const useCalculator = () => {
     if (isNaN(num2)) return num1;
 
     switch (operation) {
-      case Operator.add:
+      case Operator.Add:
         return num1 + num2;
 
-      case Operator.substract:
+      case Operator.Substract:
         return num1 - num2;
 
-      case Operator.multiply:
+      case Operator.Multiply:
         return num1 * num2;
 
-      case Operator.divide:
+      case Operator.Divide:
         const result = num1 / num2;
         return isNaN(result) ? 'Indeterminate' : result;
 
