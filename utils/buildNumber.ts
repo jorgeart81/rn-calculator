@@ -6,9 +6,18 @@ export class BuildNumber {
     return this.number;
   }
 
+  static setNumberBuilt(value: string) {
+    this.isDecimal = value.includes('.');
+    this.number = value;
+  }
+
   static addDigit(digit: string): void {
+    // Allow only a single digit.
+    if (digit.length !== 1)
+      throw new Error('The entry must be a single digit.');
+
     // Ensure the digit is numeric
-    if (!/\d/.test(digit)) throw new Error('Invalid digit: must be a number');
+    if (!/\d/.test(digit)) throw new Error('Invalid digit: must be a number.');
 
     if (!this.number) {
       this.number = digit;
@@ -22,7 +31,7 @@ export class BuildNumber {
   }
 
   static makeDecimal(): void {
-    if (this.number?.includes('.')) return;
+    if (this.isDecimal) return;
 
     if (!this.number || this.number === '0') this.addDigit('0');
 
