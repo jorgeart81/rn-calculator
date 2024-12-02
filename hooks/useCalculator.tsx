@@ -69,12 +69,14 @@ export const useCalculator = () => {
   };
 
   const deleteDigit = () => {
+    let newNumber = '0';
     const { sign, temporalNumber } = signAndNumber(number);
 
     if (temporalNumber.length > 1)
-      return setNumber(sign + temporalNumber.slice(0, -1));
+      newNumber = sign + temporalNumber.slice(0, -1);
 
-    setNumber('0');
+    setNumber(newNumber);
+    BuildNumber.setNumberBuilt(newNumber);
   };
 
   const setLastNumber = () => {
