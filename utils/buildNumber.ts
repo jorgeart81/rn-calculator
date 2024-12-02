@@ -1,16 +1,24 @@
 import { regex } from './regex';
 
 export class BuildNumber {
-  private static number?: string;
-  private static isDecimal = false;
+  private static _number?: string;
+  private static _isDecimal = false;
+  private static hasDecimalPoint = false;
 
   static get numberBuilt() {
-    return this.number;
+    return this._number;
+  }
+
+  static get isDecimal() {
+    return this._isDecimal;
   }
 
   static setNumberBuilt(value: string) {
-    this.isDecimal = value.includes('.');
-    this.number = value;
+    if (isNaN(Number(value)))
+      throw new Error('Invalid value: must be a number.');
+
+    this._number = value;
+    this.decimalValidation(this._number);
   }
 
   static addDigit(digit: string): void {
@@ -22,32 +30,41 @@ export class BuildNumber {
     if (!regex.isNumeric.test(digit))
       throw new Error('Invalid digit: must be a number.');
 
-    if (!this.number) {
-      this.number = digit;
+    if (!this._number) {
+      this._number = digit;
       return;
     }
 
-    if (this.number.startsWith('0') && !this.isDecimal)
+    if (this._number.startsWith('0') && !this.hasDecimalPoint)
       this.removeLeadingZeros();
 
-    this.number += digit;
+    this._number += digit;
+    this.decimalValidation(this._number);
   }
 
   static makeDecimal(): void {
-    if (this.isDecimal) return;
+    if (this.hasDecimalPoint) return;
 
-    if (!this.number || this.number === '0') this.addDigit('0');
+    if (!this._number || this._number === '0') this.addDigit('0');
 
-    this.number += '.';
-    this.isDecimal = true;
+    this._number += '.';
+    this.hasDecimalPoint = true;
   }
 
   static reset() {
-    this.number = undefined;
-    this.isDecimal = false;
+    this._number = undefined;
+    this._isDecimal = false;
+    this.hasDecimalPoint = false;
   }
 
   private static removeLeadingZeros(): void {
-    this.number = this.number?.replace(/^0+/, '');
+    this._number = this._number?.replace(/^0+/, '');
+  }
+
+  private static decimalValidation(number: string) {
+    const lastDigit = number.at(-1);
+
+    this.hasDecimalPoint = number.includes('.');
+    this._isDecimal = this.hasDecimalPoint && lastDigit !== '0';
   }
 }
