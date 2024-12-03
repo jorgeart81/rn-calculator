@@ -22,11 +22,8 @@ export default function CalculatorApp() {
     <SafeAreaView style={globalStyles.calculartorContainer}>
       <View style={{ paddingHorizontal: 30, marginBottom: 20 }}>
         <ThemeText variant='h1'>{formula}</ThemeText>
-        <ThemeText variant='h2'>
-          {prevNumber == formula ? '' : prevNumber}
-        </ThemeText>
+        <ThemeText variant='h2'>{prevNumber || ' '}</ThemeText>
       </View>
-
       <View style={globalStyles.row}>
         <CalculatorButton
           label='C'
@@ -52,7 +49,6 @@ export default function CalculatorApp() {
           onPress={() => calculateOperation('Divide')}
         />
       </View>
-
       <View style={globalStyles.row}>
         <CalculatorButton label='7' onPress={() => buildNumber('7')} />
         <CalculatorButton label='8' onPress={() => buildNumber('8')} />
@@ -63,7 +59,6 @@ export default function CalculatorApp() {
           onPress={() => calculateOperation('Multiply')}
         />
       </View>
-
       <View style={globalStyles.row}>
         <CalculatorButton label='4' onPress={() => buildNumber('4')} />
         <CalculatorButton label='5' onPress={() => buildNumber('5')} />
@@ -74,7 +69,6 @@ export default function CalculatorApp() {
           onPress={() => calculateOperation('Substract')}
         />
       </View>
-
       <View style={globalStyles.row}>
         <CalculatorButton label='1' onPress={() => buildNumber('1')} />
         <CalculatorButton label='2' onPress={() => buildNumber('2')} />
@@ -85,7 +79,6 @@ export default function CalculatorApp() {
           onPress={() => calculateOperation('Add')}
         />
       </View>
-
       <View style={globalStyles.row}>
         <CalculatorButton
           label='0'

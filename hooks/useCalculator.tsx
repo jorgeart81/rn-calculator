@@ -134,7 +134,7 @@ export const useCalculator = () => {
   };
 
   const calculateOperation = (operator: keyof typeof Operator) => {
-    const sanitizedNumber = setLastNumber();
+    setLastNumber();
     if (lastOperator.current) calculateResult();
     lastOperator.current = Operator[operator];
 
